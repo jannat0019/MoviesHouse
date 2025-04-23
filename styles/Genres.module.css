@@ -1,0 +1,82 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.headerContainer {
+    width: 100%;
+    background-color: lightcoral;
+    border-radius: 3rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+.pageTitle {
+    margin: 0;
+    font-size: 2rem;
+    color: white;
+}
+
+.backButton {
+    padding: 0.5rem 1.5rem;
+    background-color: white;
+    color: lightcoral;
+    border: none;
+    border-radius: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.backButton:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-2px);
+}
+
+.genresGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+}
+
+.genreCard {
+    background-color:lightcoral;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 150px;
+}
+
+.genreCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.genreCard h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.viewDetails {
+    margin-top: 1rem;
+    color: #666;
+    font-weight: bold;
+    text-align: right;
+    font-size: 0.9rem;
+}

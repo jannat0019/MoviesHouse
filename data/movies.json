@@ -1,0 +1,83 @@
+{
+    "movies": [
+      {
+        "id": 1,
+        "title": "Inception",
+        "directorId": 1,
+        "description": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
+        "releaseYear": 2010,
+        "genreId": 1,
+        "rating": 8.8,
+        "img":"/imgs/inception.jpg"
+      },
+      {
+        "id": 2,
+        "title": "The Shawshank Redemption",
+        "directorId": 2,
+        "description": "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+        "releaseYear": 1994,
+        "genreId": 2,
+        "rating": 9.3,
+        "img":"/imgs/ss-redem.jpg"
+      },
+      {
+        "id": 3,
+        "title": "The Dark Knight",
+        "directorId": 1,
+        "description": "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
+        "releaseYear": 2008,
+        "genreId": 2,
+        "rating": 9.0,
+        "img": "/imgs/the-dark-knight.jpg"
+      },
+      {
+        "id": 4,
+        "title": "Barbie",
+        "directorId": 3,
+        "description": "Barbie suffers a crisis that leads her to question her world and her existence, so she sets off for the human world to find true happiness.",
+        "releaseYear": 2023,
+        "genreId": 2,
+        "rating": 7.3,
+        "img":"/imgs/barbie.jpg"
+      }
+    ],
+    "genres": [
+      {
+        "id": 1,
+        "name": "Sci-Fi"
+      },
+      {
+        "id": 2,
+        "name": "Drama"
+      },
+      {
+        "id": 3,
+        "name": "Action"
+      },
+      {
+        "id": 4,
+        "name": "Crime"
+      },
+      {
+        "id": 5,
+        "name": "Thriller"
+      }
+    ],
+    "directors": [
+      {
+        "id": 1,
+        "name": "Christopher Nolan",
+        "biography": "British-American filmmaker known for his cerebral, often nonlinear storytelling."
+      },
+      {
+        "id": 2,
+        "name": "Frank Darabont",
+        "biography": "American filmmaker who has written and directed several films, often adapting works by Stephen King."
+      },
+      {
+        "id": 3,
+        "name": "Greta Gerwig",
+        "biography": "American actress, playwright, and filmmaker known for her work in independent films and her distinctive voice in coming-of-age stories."
+      }
+    ]
+  }

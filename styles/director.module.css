@@ -1,0 +1,87 @@
+/* director.module.css */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  .directorName {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: lightcoral;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
+  }
+  
+  .biography {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    color: white;
+  }
+  
+  .moviesTitle {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 2rem 0 1rem;
+    color: white;
+  }
+  
+  .moviesList {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+  }
+  
+  .movieItem {
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+  }
+  
+  .movieItem::before {
+    content: "•";
+    color: #666;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+  }
+  
+  .movieLink {
+    color:lightcoral;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  
+  .movieLink:hover {
+    color: #004499;
+    text-decoration: underline;
+  }
+  
+  .backLink {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 0.5rem 1rem;
+    background-color: lightcoral;
+    color: #333;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+  }
+  
+  .backLink:hover {
+    background-color: #eee;
+  }
+  
+  .loading,
+  .error {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.1rem;
+  }
+  
+  .error {
+    color: #d32f2f;
+  }

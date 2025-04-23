@@ -1,0 +1,98 @@
+.homeContainer{
+    max-width:1200px;
+    margin:0 auto;
+    padding: 2 rem;
+}
+
+.pageTitle{
+
+    font-size:2.5 rem;
+    font-weight: 700;
+    color: darkslategray;
+    padding: 20px;
+    position: relative;
+    text-align: center;
+
+}
+
+.moviesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  
+  .headerContainer {
+    width: 100%;
+    background-color: lightcoral;
+    border-radius: 3rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    margin-top: 5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+.pageTitle {
+    margin: 0;
+    /* Add these to match your image style */
+    font-size: 2rem;
+    color: darkslategray;
+}
+
+.browseButton {
+    padding: 0.3rem 1rem; /* Smaller padding */
+    background-color: white;
+    color: lightcoral;
+    border: none;
+    border-radius: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 0.8rem; /* Smaller font size */
+    /* Add these to match your image style */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.browseButton:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-2px);
+}
+
+.footer {
+  background-color: #222;
+  color: white;
+  padding: 2rem 0;
+  margin-top: 3rem;
+}
+
+.footerContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footerLinks {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footerLink {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footerLink:hover {
+  color: #f5f5f5;
+  text-decoration: underline;
+}
