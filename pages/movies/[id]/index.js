@@ -1,120 +1,203 @@
-import Link from 'next/link';
+import { 
+  Box, 
+  Typography, 
+  Container, 
+  Grid, 
+  Paper, 
+  Chip, 
+  Rating, 
+  Button,
+  CircularProgress,
+  Alert,
+  useTheme
+} from '@mui/material';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
-import styles from '../../../styles/Movies.module.css';
+import { ChevronLeft, Movie as MovieIcon } from '@mui/icons-material';
 
-export default function Movie({ movie}) {
+export default function MoviePage({ movie }) {
   const router = useRouter();
+  const theme = useTheme();
 
-  console.log("in main function:", movie)
   if (router.isFallback) {
-    return <div className={styles.loading}>Loading...</div>;
+    return (
+      <Box display="flex" justifyContent="center" mt={4}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   if (!movie) {
     return (
-      <div className={styles.error}>
-        <h1>Movie Not Found</h1>
-        <Link href="/movies" className={styles.button}>
-          Back to Movies
+      <Container maxWidth="md" sx={{ mt: 4 }}>
+        <Alert severity="error" sx={{ mb: 2 }}>
+          Movie not found
+        </Alert>
+        <Link href="/movies" passHref>
+          <Button 
+            variant="contained" 
+            startIcon={<ChevronLeft />}
+            sx={{ mt: 2 }}
+          >
+            Back to Movies
+          </Button>
         </Link>
-      </div>
+      </Container>
     );
   }
 
   return (
-    <div className={styles.container}>
+    <>
       <Head>
         <title>{movie.title} | Movie Details</title>
       </Head>
 
-      <div className={styles.movieHeader}>
-        <h1 className={styles.movieTitle}>{movie.title}</h1>
-        <div className={styles.movieMeta}>
-          <span>{movie.releaseYear}</span>
-          <span className={styles.rating}>Rating: {movie.rating}/10</span>
-        </div>
-      </div>
+      <Container maxWidth="lg" sx={{ py: 4 }}>
+        <Paper elevation={3} sx={{ p: 4, mb: 4 }}>
+          <Grid container spacing={4}>
+            {/* Movie Poster */}
+            <Grid item xs={12} md={4}>
+              <Box
+                component="img"
+                src={movie.img}
+                alt={movie.title}
+                sx={{
+                  width: '100%',
+                  borderRadius: 2,
+                  boxShadow: 3,
+                  aspectRatio: '2/3',
+                  objectFit: 'cover',
+                  backgroundColor: theme.palette.grey[200]
+                }}
+                onError={(e) => {
+                  e.target.src = '/default-movie.jpg';
+                }}
+              />
+            </Grid>
 
-      <div className={styles.movieContent}>
-        <div className={styles.poster}>
-          <img src ={movie.img} className={styles.posterImage}/>
-          {/* {movie.title.split(' ').map(word => word[0]).join('')} */}
-        </div>
+            {/* Movie Details */}
+            <Grid item xs={12} md={8}>
+              <Box mb={3}>
+                <Typography variant="h3" component="h1" gutterBottom>
+                  {movie.title}
+                </Typography>
+                
+                <Box display="flex" alignItems="center" gap={2} mb={2}>
+                  <Chip 
+                    label={movie.releaseYear} 
+                    color="primary" 
+                    variant="outlined"
+                  />
+                  <Box display="flex" alignItems="center">
+                    <Rating 
+                      value={movie.rating / 2} 
+                      precision={0.5} 
+                      readOnly 
+                    />
+                    <Typography variant="body1" ml={1}>
+                      {movie.rating}/10
+                    </Typography>
+                  </Box>
+                </Box>
 
-        <div className={styles.details}>
-          <p className={styles.description}>{movie.description}</p>
-          
-          {/* <div className={styles.director}>
-            <h2>Director</h2>
-            {director ? (
-              <Link href={`/movies/${movie.id}/director/${director.id}`} className={styles.directorLink}>
-                {director.name}
-              </Link>
-            ) : (
-              <p>Director information not available</p>
-            )}
-          </div> */}
+                <Typography variant="body1" paragraph>
+                  {movie.description}
+                </Typography>
+              </Box>
 
-          <Link href="/" className={styles.button}>
-            Back to All Movies
-          </Link>
-        </div>
-      </div>
-    </div>
+              {/* Action Buttons */}
+              <Box display="flex" gap={2} mt={4}>
+                <Link href="/" passHref>
+                  <Button 
+                    variant="contained" 
+                    startIcon={<ChevronLeft />}
+                  >
+                    Back to All Movies
+                  </Button>
+                </Link>
+                
+                <Button 
+                  variant="outlined" 
+                  startIcon={<MovieIcon />}
+                  onClick={() => alert('Feature coming soon!')}
+                >
+                  Watch Trailer
+                </Button>
+              </Box>
+            </Grid>
+          </Grid>
+        </Paper>
+
+        {/* Additional Sections (can be expanded) */}
+        <Typography variant="h5" gutterBottom sx={{ mt: 4 }}>
+          More Details
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={6} md={3}>
+            <Paper sx={{ p: 2 }}>
+              <Typography variant="subtitle2">Genre</Typography>
+              <Typography>Action</Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={6} md={3}>
+            <Paper sx={{ p: 2 }}>
+              <Typography variant="subtitle2">Director</Typography>
+              <Typography>Christopher Nolan</Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={6} md={3}>
+            <Paper sx={{ p: 2 }}>
+              <Typography variant="subtitle2">Duration</Typography>
+              <Typography>148 min</Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={6} md={3}>
+            <Paper sx={{ p: 2 }}>
+              <Typography variant="subtitle2">Language</Typography>
+              <Typography>English</Typography>
+            </Paper>
+          </Grid>
+        </Grid>
+      </Container>
+    </>
   );
 }
 
 
 export async function getStaticProps({ params }) {
   try {
-
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/movies/${params.id}`);
+    const data = await res.json();
     
-    const movieId = parseInt(params.id);
-
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/movies/${movieId}`);
-    const data=await res.json()
-    console.log("data   ", data)
-    const movie=data.movie
-    
-
-    if (!movie) {
-      return {
-        notFound: true
-      };
+    if (!data.success || !data.movie) {
+      return { notFound: true };
     }
-
-    // const director = data.directors.find(d => d.id === movie.directorId);
 
     return {
       props: {
-        movie
-        // director: director || null, // Ensure director is never undefined
+        movie: data.movie
       },
-      revalidate: 60, // ISR
+      revalidate: 60,
     };
   } catch (error) {
     console.error('Error loading movie:', error);
-    return {
-      notFound: true
-    };
+    return { notFound: true };
   }
 }
 
 export async function getStaticPaths() {
   try {
-
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/movies`);
-    const data= await res.json()
+    const data = await res.json();
 
-    console.log("in movies static path")
     const paths = data.movies.map(movie => ({
-      params: { id: movie.id.toString() } // Ensure ID is string
+      params: { id: movie.id.toString() }
     }));
 
     return {
       paths,
-      fallback: true, 
+      fallback: true,
     };
   } catch (error) {
     console.error('Error generating paths:', error);

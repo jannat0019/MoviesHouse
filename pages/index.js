@@ -27,6 +27,9 @@ export default function Home({trendingMovies}){
             </Head>
             <div className={styles.headerContainer}>
                 <h1 className={styles.pageTitle}>Trending Movies</h1>
+                <button className={styles.browseButton} onClick={()=>router.push('/director')}>
+                   Directors
+                </button>
 
                 <button className={styles.browseButton} onClick={toggleTheme}>
                     {isDarkMode ? "Light Mode" : "Dark Mode"}
