@@ -1,13 +1,12 @@
 import Link from 'next/link';
 import Head from 'next/head';
-import path from 'path';
-import fs from 'fs/promises';
 import { useRouter } from 'next/router';
 import styles from '../../../styles/Movies.module.css';
 
-export default function Movie({ movie, director }) {
+export default function Movie({ movie}) {
   const router = useRouter();
 
+  console.log("in main function:", movie)
   if (router.isFallback) {
     return <div className={styles.loading}>Loading...</div>;
   }
@@ -46,7 +45,7 @@ export default function Movie({ movie, director }) {
         <div className={styles.details}>
           <p className={styles.description}>{movie.description}</p>
           
-          <div className={styles.director}>
+          {/* <div className={styles.director}>
             <h2>Director</h2>
             {director ? (
               <Link href={`/movies/${movie.id}/director/${director.id}`} className={styles.directorLink}>
@@ -55,7 +54,7 @@ export default function Movie({ movie, director }) {
             ) : (
               <p>Director information not available</p>
             )}
-          </div>
+          </div> */}
 
           <Link href="/" className={styles.button}>
             Back to All Movies
@@ -66,17 +65,18 @@ export default function Movie({ movie, director }) {
   );
 }
 
-// Keep your existing getStaticProps and getStaticPaths functions
 
 export async function getStaticProps({ params }) {
   try {
-    const p = path.join(process.cwd(), 'data', 'movies.json');
-    const datajson = await fs.readFile(p);
-    const data = JSON.parse(datajson);
 
-    // Convert params.id to number if IDs are numbers in your JSON
+    
     const movieId = parseInt(params.id);
-    const movie = data.movies.find(m => m.id === movieId);
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/movies/${movieId}`);
+    const data=await res.json()
+    console.log("data   ", data)
+    const movie=data.movie
+    
 
     if (!movie) {
       return {
@@ -84,12 +84,12 @@ export async function getStaticProps({ params }) {
       };
     }
 
-    const director = data.directors.find(d => d.id === movie.directorId);
+    // const director = data.directors.find(d => d.id === movie.directorId);
 
     return {
       props: {
-        movie,
-        director: director || null, // Ensure director is never undefined
+        movie
+        // director: director || null, // Ensure director is never undefined
       },
       revalidate: 60, // ISR
     };
@@ -103,17 +103,18 @@ export async function getStaticProps({ params }) {
 
 export async function getStaticPaths() {
   try {
-    const p = path.join(process.cwd(), 'data', 'movies.json');
-    const datajson = await fs.readFile(p);
-    const data = JSON.parse(datajson);
 
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/movies`);
+    const data= await res.json()
+
+    console.log("in movies static path")
     const paths = data.movies.map(movie => ({
       params: { id: movie.id.toString() } // Ensure ID is string
     }));
 
     return {
       paths,
-      fallback: true, // or 'blocking' for better UX
+      fallback: true, 
     };
   } catch (error) {
     console.error('Error generating paths:', error);

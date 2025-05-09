@@ -3,11 +3,19 @@ import Link from 'next/link';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css'
 import MoviesList from '@/components/MoviesList';
-import path from 'path'
-import fs from 'fs/promises';
 import router from 'next/router';
+import { ThemeContext } from '../src/context/ThemeContext';
+
+import { useEffect, useContext } from 'react';
 
 export default function Home({trendingMovies}){
+
+
+    const { isDarkMode, toggleTheme } = useContext(ThemeContext);
+
+    useEffect(() => {
+    document.body.className = isDarkMode ? "dark-mode" : "light-mode";
+  }, [isDarkMode]);
 
 
     return(
@@ -19,6 +27,10 @@ export default function Home({trendingMovies}){
             </Head>
             <div className={styles.headerContainer}>
                 <h1 className={styles.pageTitle}>Trending Movies</h1>
+
+                <button className={styles.browseButton} onClick={toggleTheme}>
+                    {isDarkMode ? "Light Mode" : "Dark Mode"}
+                </button>
                 <button 
                   className={styles.browseButton}
                   onClick={() => router.push('/genres')}>
@@ -72,18 +84,33 @@ export default function Home({trendingMovies}){
 }
 
 export async function getStaticProps() {
-
-  const p=path.join(process.cwd(),'data','movies.json');
-  const datajson =await fs.readFile(p);
-  
-  const data=JSON.parse(datajson);
+  try {
+    // Use absolute URL for both dev and production
+   const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/movies`);
     
-  
-   
+    if (!res.ok) {
+      throw new Error(`API request failed with status ${res.status}`);
+    }
+    
+    const data = await res.json();
+    
+    if (!data.success) {
+      throw new Error(data.error || 'API request failed');
+    }
+    
     return {
       props: {
-        trendingMovies:data['movies']
+        trendingMovies: data.movies || []
       },
-      revalidate: 60, // ISR: regenerate every 60 seconds if needed
+      revalidate: 60
+    };
+  } catch (error) {
+    console.error("Error fetching movies:", error);
+    return {
+      props: {
+        trendingMovies: []
+      },
+      revalidate: 60
     };
   }
+}

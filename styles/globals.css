@@ -1,6 +1,19 @@
-html, body {
-    background-color: #2E3135;
+html{
+    /* background-color: #2E3135; */
     min-height: 100vh;
     margin: 0;
     padding: 0;
-  }
+}
+  body {
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.light-mode {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+body.dark-mode {
+  background-color: #121212;
+  color: #fff;
+}
